@@ -15,22 +15,27 @@ pipeline {
 
     stage('Build Docker') {
       steps {
-        sh 'docker build -t $IMAGE:latest .'
+        bat 'docker build -t mano0603/order-app:latest .'
+      }
+    }
+
+    stage('Login Docker Hub') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+          bat 'echo %PASS% | docker login -u %USER% --password-stdin'
+        }
       }
     }
 
     stage('Push Docker Hub') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-          sh 'echo $PASS | docker login -u $USER --password-stdin'
-          sh 'docker push $IMAGE:latest'
-        }
+        bat 'docker push mano0603/order-app:latest'
       }
     }
 
     stage('Deploy Kubernetes') {
       steps {
-        sh 'kubectl apply -f k8s/'
+        bat 'kubectl apply -f k8s/'
       }
     }
   }
