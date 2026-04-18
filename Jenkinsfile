@@ -9,7 +9,7 @@ pipeline {
 
     stage('Clone') {
       steps {
-        git '<your-github-repo-url>'
+        git 'https://github.com/Murugan0603/order-app.git'
       }
     }
 
