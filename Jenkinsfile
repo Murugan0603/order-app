@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    IMAGE = "mano0603/order-app"
+    IMAGE = "mano0603/order-app:latest"
   }
 
   stages {
@@ -15,27 +15,29 @@ pipeline {
 
     stage('Build Docker') {
       steps {
-        bat 'docker build -t mano0603/order-app:latest .'
+        bat "docker build -t %IMAGE% ."
       }
     }
 
     stage('Login Docker Hub') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-          bat 'echo %PASS% | docker login -u %USER% --password-stdin'
+          bat '''
+          echo %PASS% | docker login -u %USER% --password-stdin
+          '''
         }
       }
     }
 
     stage('Push Docker Hub') {
       steps {
-        bat 'docker push mano0603/order-app:latest'
+        bat "docker push %IMAGE%"
       }
     }
 
     stage('Deploy Kubernetes') {
       steps {
-        bat 'kubectl apply -f k8s/'
+        bat "kubectl apply -f k8s/"
       }
     }
   }
