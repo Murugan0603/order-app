@@ -32,7 +32,12 @@ pipeline {
         bat "docker push %IMAGE%"
       }
     }
-
+    stage('Check Kubernetes') {
+      steps {
+        bat 'kubectl config current-context'
+        bat 'kubectl get nodes'
+      }
+    }
     stage('Deploy Kubernetes') {
       steps {
         bat "kubectl apply -f k8s/"
