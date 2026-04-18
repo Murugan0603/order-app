@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order App</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #f4f4f4; }
+    .box {
+      background: white;
+      width: 300px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Order System</h2>
+
+  <input id="user_id" placeholder="User ID" />
+  <input id="order_id" placeholder="Order ID" />
+
+  <button onclick="createOrder()">Create Order</button>
+
+  <p id="result"></p>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

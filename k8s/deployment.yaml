@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: order-app
+  template:
+    metadata:
+      labels:
+        app: order-app
+    spec:
+      containers:
+        - name: order-app
+          image: mano0603/order-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: AWS_REGION
+              value: "ap-south-1"
