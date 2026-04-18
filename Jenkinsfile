@@ -32,6 +32,12 @@ pipeline {
         bat "docker push %IMAGE%"
       }
     }
+    stage('Fix Kubernetes Context') {
+      steps {
+        bat 'kubectl config use-context docker-desktop'
+        bat 'kubectl get nodes'
+      }
+    }    
     stage('Check Kubernetes') {
       steps {
         bat 'kubectl config current-context'
@@ -46,4 +52,3 @@ pipeline {
   }
 }
 
-final jenkins file?
